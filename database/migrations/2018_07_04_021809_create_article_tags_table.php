@@ -15,8 +15,8 @@ class CreateArticleTagsTable extends Migration
     {
         Schema::create('article_tags', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('articles_id')->default(0);
-            $table->integer('tags_id')->default(0);
+            $table->integer('article_id')->default(0);
+            $table->integer('tag_id')->default(0);
             $table->timestamps();
         });
     }

@@ -11,6 +11,24 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/logout', function () {
+    return view('/admin');
 });
+
+Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
+
+    Route::get('/', 'HomeController@index');
+    Route::resource('categories', 'CategoryController');
+    Route::resource('articles', 'ArticleController');
+
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

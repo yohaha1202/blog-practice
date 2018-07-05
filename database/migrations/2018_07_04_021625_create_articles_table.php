@@ -17,8 +17,8 @@ class CreateArticlesTable extends Migration
             $table->increments('id');
             $table->string('title')->comment('標題');
             $table->string('photo')->comment('圖片');
-            $table->char('features')->comment('特色');
-            $table->char('short_desc')->comment('描述');
+            $table->text('features')->comment('特色');
+            $table->text('short_desc')->comment('描述');
             $table->integer('view_num')->default(0)->comment('觀看次數');
             $table->integer('comment_num')->default(0)->comment('留言次數');
             $table->integer('like_num')->default(0)->comment('愛心數');

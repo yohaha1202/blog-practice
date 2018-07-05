@@ -15,15 +15,15 @@ class ArticleCategorySeeder extends Seeder
 
         for ($i = 1; $i <= 10; $i++) {
             \App\ArticleCategory::create([
-                'articles_id' => $i,
-                'categories_id' => $i
+                'article_id' => $i,
+                'category_id' => $i
             ]);
         }
 
         for ($i = 1; $i <= 10; $i++) {
             \App\ArticleCategory::create([
-                'articles_id' => $i,
-                'categories_id' => (11 - $i)
+                'article_id' => $i,
+                'category_id' => (11 - $i)
             ]);
         }
     }

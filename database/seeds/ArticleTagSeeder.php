@@ -15,14 +15,14 @@ class ArticleTagSeeder extends Seeder
 
         for ($i = 1; $i <= 10; $i++) {
             \App\ArticleTag::create([
-                'articles_id' => $i,
-                'tags_id' => $i
+                'article_id' => $i,
+                'tag_id' => $i
             ]);
         }
         for ($i = 1; $i <= 10; $i++) {
             \App\ArticleTag::create([
-                'articles_id' => $i,
-                'tags_id' => (11 - $i)
+                'article_id' => $i,
+                'tag_id' => (11 - $i)
             ]);
         }
     }
