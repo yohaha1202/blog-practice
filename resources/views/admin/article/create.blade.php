@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('admin.layouts.default')
 <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
 
 @section('content')

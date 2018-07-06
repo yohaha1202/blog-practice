@@ -41,8 +41,6 @@ class ArticleController extends Controller
 
     public function store(Request $request)
     {
-        date_default_timezone_set('Asia/Taipei');
-
         $photoName = '';
         if(isset($request->photo)) $photoName =  $this->updateImg($request->photo);
 
@@ -57,8 +55,8 @@ class ArticleController extends Controller
         $articles->status = ($request->get('status') == 'on') ? '1' : '0';
 
         if ($articles->save()) {
-            $this->addRelationData('category',$request->get('category_id'),$articles->id);
-            $this->addRelationData('tag',$request->get('tag_id'),$articles->id);
+            if(!empty($request->get('category_id'))) $this->addRelationData('category',$request->get('category_id'),$articles->id);
+            if(!empty($request->get('tag_id'))) $this->addRelationData('tag',$request->get('tag_id'),$articles->id);
 
             return redirect('admin/articles')->with('alert', '新增成功!');
         } else {
@@ -104,9 +102,9 @@ class ArticleController extends Controller
     {
         $artice = Article::where('id', '=', $id)->first();
 
-        $photoName = '';
+        $photoName = $artice->photo;
 
-        if(isset($request->photo)) $photoName = $this->updateImg($request->photo);
+        if(isset($request->photo)) $photoName = $this->uploadImg($request->photo);
 
         Article::where('id',$id)->update([
             'title' => $request->title,
@@ -119,43 +117,61 @@ class ArticleController extends Controller
         $this->deleteRelationData('category',$id);
         $this->deleteRelationData('tag',$id);
 
-        $this->addRelationData('category',$request->category_id,$id);
-        $this->addRelationData('tag',$request->tag_id,$id);
+        if(!empty($request->category_id)) $this->addRelationData('category',$request->category_id,$id);
+        if(!empty($request->tag_id)) $this->addRelationData('tag',$request->tag_id,$id);
 
-//        $this->deleteImg($artice->photo);
+        if(isset($request->photo)) $this->deleteImg($artice->photo);
 
         return redirect('admin/articles')->with('alert', '修改成功!');
     }
 
+    public function destroy($id)
+    {
+        $artice = Article::where('id', '=', $id)->first();
+
+        $this->deleteImg($artice->photo);
+        $this->deleteRelationData('category',$id);
+        $this->deleteRelationData('tag',$id);
+        Article::find($id)->delete();
+
+        return redirect('admin/articles')->with('alert', '删除成功!');
+    }
+
     private function addRelationData($type,$relationAry,$articleId)
     {
-        if($type == 'category'){
-            foreach ($relationAry as $categoryId){
-                $article_categories = new ArticleCategory();
-                $article_categories->article_id = $articleId;
-                $article_categories->category_id = $categoryId;
-                $article_categories->save();
-            }
-        }else if($type == 'tag'){
-            foreach ($relationAry as $tagId){
-                $article_tags = new ArticleTag();
-                $article_tags->article_id = $articleId;
-                $article_tags->tag_id = $tagId;
-                $article_tags->save();
-            }
+        switch ($type){
+            case 'category':
+                foreach ($relationAry as $categoryId){
+                    $article_categories = new ArticleCategory();
+                    $article_categories->article_id = $articleId;
+                    $article_categories->category_id = $categoryId;
+                    $article_categories->save();
+                }
+                break;
+            case'tag':
+                foreach ($relationAry as $tagId){
+                    $article_tags = new ArticleTag();
+                    $article_tags->article_id = $articleId;
+                    $article_tags->tag_id = $tagId;
+                    $article_tags->save();
+                }
+                break;
         }
     }
 
     private function deleteRelationData($type,$articleId)
     {
-        if($type == 'category'){
-            ArticleCategory::where('article_id',"=",$articleId)->delete();
-        }else if($type == 'tag'){
-            ArticleTag::where('article_id',"=",$articleId)->delete();
+        switch ($type){
+            case 'category':
+                ArticleCategory::where('article_id',"=",$articleId)->delete();
+                break;
+            case'tag':
+                ArticleTag::where('article_id',"=",$articleId)->delete();
+                break;
         }
     }
 
-    private function updateImg($photo)
+    private function uploadImg($photo)
     {
         $file = $photo;
         $extension = $file->getClientOriginalExtension();
@@ -164,24 +180,13 @@ class ArticleController extends Controller
 
         $file->move($destination_path, $file_name);
 
-        return $destination_path.$file_name;
+        return $file_name;
     }
 
     private function deleteImg($filePath)
     {
-        if(Storage::delete($filePath)){
-            return true;
-        }else{
-            return false;
+        if (file_exists(public_path().'/images/'.$filePath)) {
+            unlink(public_path().'/images/'.$filePath);
         }
-    }
-
-    public function destroy($id)
-    {
-        $this->deleteRelationData('category',$id);
-        $this->deleteRelationData('tag',$id);
-        Article::find($id)->delete();
-
-        return redirect('admin/articles')->with('alert', '删除成功!');
     }
 }

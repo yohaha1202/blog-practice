@@ -18,7 +18,6 @@ class CreateCommentsTable extends Migration
             $table->integer('articles_id')->default(0);
             $table->text('content')->comment('內容');
             $table->text('name')->comment('留言者');
-            $table->dateTime('create_time')->comment('留言時間');
             $table->timestamps();
         });
     }

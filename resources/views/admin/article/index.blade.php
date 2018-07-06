@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('admin.layouts.default')
 
 @section('content')
     <div id="content" class="col-lg-10 col-sm-10">
@@ -17,7 +17,7 @@
             <div class="box col-md-12">
                 <div class="box-inner">
                     <div class="box-header well" data-original-title="">
-                        <h2><i class="glyphicon glyphicon-user"></i>文章管理</h2>
+                        <h2><i class="glyphicon glyphicon-file"></i>文章管理</h2>
                         <div class="box-icon">
                             <a href="#" class="btn btn-minimize btn-round btn-default"><i
                                         class="glyphicon glyphicon-chevron-up"></i></a>
@@ -44,7 +44,6 @@
                                 <th>特色</th>
                                 <th>觀看數</th>
                                 <th>留言數</th>
-                                <th>愛心數</th>
                                 <th>狀態</th>
                                 <th>編輯</th>
                             </tr>
@@ -64,7 +63,6 @@
                                     <td class="center">{{ $article->features }}</td>
                                     <td class="center">{{ $article->view_num }}</td>
                                     <td class="center">{{ $article->comment_num }}</td>
-                                    <td class="center">{{ $article->like_num }}</td>
                                     <td class="center">
                                         <span class="{{ ($article->status == '1') ? 'label-success label label-default' : 'label-default label' }}">{{ ($article->status == '1') ? '顯示' : '隱藏' }}</span>
                                     </td>
@@ -101,6 +99,5 @@
             type: 'success',
             layout:'topRight'
         });
-
     }
 </script>

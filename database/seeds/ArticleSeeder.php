@@ -16,7 +16,7 @@ class ArticleSeeder extends Seeder
         for ($i = 1; $i <= 10; $i++) {
             \App\Article::create([
                 'title' => '標題 ' . $i,
-                'photo' => 'images/' . $i .'.jpg',
+                'photo' => $i .'.jpg',
                 'features' => '特色 ' . $i,
                 'short_desc' => '描述 ' . $i,
                 'view_num' => '0',

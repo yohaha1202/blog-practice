@@ -18,8 +18,7 @@ class CommentSeeder extends Seeder
                 \App\Comment::create([
                     'articles_id' => $i,
                     'content' => '留言'. $j,
-                    'name' => '留言人'. $j,
-                    'create_time' => '2018-07-04 08:03:49'
+                    'name' => '留言人'. $j
                 ]);
             }
         }

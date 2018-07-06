@@ -1,4 +1,4 @@
-@extends('layouts.script')
+@extends('admin.layouts.script')
 
 <html>
 <head>

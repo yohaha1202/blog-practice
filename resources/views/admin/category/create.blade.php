@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('admin.layouts.default')
 
 @section('content')
     <div id="content" class="col-lg-10 col-sm-10">

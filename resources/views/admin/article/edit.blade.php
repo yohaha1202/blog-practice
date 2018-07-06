@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('admin.layouts.default')
 <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
 
 @section('content')
@@ -22,7 +22,7 @@
                         <h2><i class="glyphicon glyphicon-edit"></i> 新增文章</h2>
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
-                                <strong>新增失败</strong> 输入不符合要求<br><br>
+                                <strong>修改失败</strong> 输入不符合要求<br><br>
                                 {!! implode('<br>', $errors->all()) !!}
                             </div>
                         @endif
@@ -60,7 +60,7 @@
 
                                 <div class="form-group">
                                     <label for="exampleInputFile">列表主圖</label>
-                                    <input type="file" name="photo" value="{{ $articles->photo }}">
+                                    <input type="file" name="photo">{{ $articles->photo }}
                                 </div>
 
                                 <div class="form-group">
