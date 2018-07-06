@@ -42,7 +42,7 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         $photoName = '';
-        if(isset($request->photo)) $photoName =  $this->updateImg($request->photo);
+        if(isset($request->photo)) $photoName =  $this->uploadImg($request->photo);
 
         $articles = new Article();
         $articles->title = $request->get('title');
