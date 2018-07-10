@@ -14,7 +14,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $articleData = Article::where('status', '1')->get();
+        $articleData = Article::where('status', '1')->orderBy('id','DESC')->get();
 
         $articleData = $this->getArticleCategoryAry($articleData);
 
@@ -55,10 +55,8 @@ class HomeController extends Controller
                 $pushAry[$category_item->category_id] = $categoryNames[$category_item->category_id];
             }
             $d->categoryAry = $pushAry;
+            $d->title = mb_substr( $d->title , 0 , 5 ).' ..';
 
-            if(strlen ( $d->title ) >='21'){
-                $d->title = mb_substr( $d->title , 0 , 5 ).' ..';
-            }
         }
         return $articleData;
     }

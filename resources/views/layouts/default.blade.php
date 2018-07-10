@@ -13,7 +13,7 @@
     <meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
     <meta name="author" content="FREEHTML5.CO" />
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
 </head>
 
 <body>

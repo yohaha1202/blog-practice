@@ -44,12 +44,20 @@ class UserController extends Controller
             $file->move($destination_path, $file_name);
         }
 
-        User::where('id',Auth::User()->id)->update([
-            'name' => $request->name,
-            'photo' => $file_name,
-            'password' => Hash::make($request->password),
-            'introduction' => $request->introduction
-        ]);
+        if (!empty($request->password)){
+            User::where('id', Auth::User()->id)->update([
+                'name' => $request->name,
+                'photo' => $file_name,
+                'password' => Hash::make($request->password),
+                'introduction' => $request->introduction
+            ]);
+        } else {
+            User::where('id', Auth::User()->id)->update([
+                'name' => $request->name,
+                'photo' => $file_name,
+                'introduction' => $request->introduction
+            ]);
+        }
 
         return redirect('admin/personal')->with('alert', '修改成功!');
     }
